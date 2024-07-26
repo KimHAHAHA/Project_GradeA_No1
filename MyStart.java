@@ -45,7 +45,7 @@ class MyFrame extends JFrame {
 
     public void MyPanel() {
         panelCenter.setLayout(null);
-        panelCenter.setBackground(new Color(211, 211, 211));
+        panelCenter.setBackground(new Color(211, 211, 210));
 
         panelButtonCenter.setSize(800, 500);
         panelButtonCenter.setLocation(0, 0);
