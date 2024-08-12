@@ -17,9 +17,8 @@ public class MyStartmain {
 
 class MyStart extends JFrame {
     JPanel panelCenter = new JPanel();
-    Pn_Rigth PnSide = new Pn_Rigth();
-    Pn_South PnSouth = new Pn_South();
-    Pn_ButtonCenter PnButton = new Pn_ButtonCenter();
+    // Pn_Rigth PnSide = new Pn_Rigth();
+    ProcessPM PnSouth = new ProcessPM();
 
     public MyStart() {
         setLocation(350, 60);
@@ -32,8 +31,8 @@ class MyStart extends JFrame {
         panelCenter.setBackground(new Color(211, 211, 211));
 
         panelCenter.add(PnSouth.Panel_South());
-        panelCenter.add(PnButton.PanelButton_Center());
-        panelCenter.add(PnSide.Panel_Rigth());
+        panelCenter.add(PnSouth.PnBtnCenter());
+        panelCenter.add(PnSouth.Panel_Rigth());
         add(panelCenter, BorderLayout.CENTER);
     }
 }

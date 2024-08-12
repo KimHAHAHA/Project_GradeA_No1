@@ -7,6 +7,7 @@ import javax.swing.JPanel;
 
 class Pn_Rigth {
     JPanel panelRigth = new JPanel();
+    ProcessPM ProCess = new ProcessPM();
 
     public JPanel Panel_Rigth() {
 
@@ -94,7 +95,7 @@ class Pn_Rigth {
         panelColorCenter.add(textData3);
         panelColorCenter.add(textData4);
 
-        panelRigth.add(panelColorCenter);
+        panelRigth.add(ProCess.panelColorSide());
         panelRigth.add(panelColorG);
         panelRigth.add(panelColorY);
         panelRigth.add(panelColorO);
