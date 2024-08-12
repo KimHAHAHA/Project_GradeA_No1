@@ -95,7 +95,7 @@ class Pn_Rigth {
         panelColorCenter.add(textData3);
         panelColorCenter.add(textData4);
 
-        panelRigth.add(ProCess.panelColorSide());
+        // panelRigth.add(ProCess.panelColorSide());
         panelRigth.add(panelColorG);
         panelRigth.add(panelColorY);
         panelRigth.add(panelColorO);

@@ -148,7 +148,8 @@ class ProcessPM implements ActionListener {
 
     ///////////////////////////////////////////////////////////// _PanelButton
     JPanel panelButtonCenter = new JPanel();
-    JButton[][] BtnCenter = new JButton[10][20];
+    Data_Button[][] BtnCenter = new Data_Button[10][20];
+    // Data_Button[][] BtnCenter = new Data_Button[10][20];
 
     public JPanel PnBtnCenter() {
 
@@ -159,7 +160,7 @@ class ProcessPM implements ActionListener {
 
         for (int i = 0; i < BtnCenter.length; i++) {
             for (int j = 0; j < BtnCenter[i].length; j++) {
-                BtnCenter[i][j] = new JButton();
+                BtnCenter[i][j] = new Data_Button();
                 panelButtonCenter.add(BtnCenter[i][j]);
             }
         }
@@ -236,6 +237,8 @@ class ProcessPM implements ActionListener {
         panelSouth.add(textR);
 
         BtnFile.addActionListener(this);
+        BtnSetInput.addActionListener(this);
+        BtnRandom.addActionListener(this);
         icon_Sounth();
 
         return panelSouth;
@@ -243,18 +246,52 @@ class ProcessPM implements ActionListener {
 
     //////////////////////////////////////////////////////////////////
     String filepath = "youuu";
+    int peoplerandom1;
+    int peoplerandom2;
+    int people;
 
     public void actionPerformed(ActionEvent e) {
-        JFileChooser fileChooser = new JFileChooser();
-        int chackdata = fileChooser.showOpenDialog(null);
+        try {
+            if (e.getSource() == BtnSetInput) {
+                String People = textInput.getText();
+                people = Integer.parseInt(People);
+                setColor();
+                for (int i = 0; i < BtnCenter.length; i++) {
+                    for (int j = 0; j < BtnCenter[i].length; j++) {
+                        BtnCenter[i][j].setpeople(people);
+                    }
+                }
+                System.out.println(people);
+            } else if (e.getSource() == BtnRandom) {
+                String Peopleramdom1 = textRandom1.getText();
+                String Peopleramdom2 = textRandom2.getText();
+                peoplerandom1 = Integer.parseInt(Peopleramdom1);
+                peoplerandom2 = Integer.parseInt(Peopleramdom2);
+                for (int i = 0; i < BtnCenter.length; i++) {
+                    for (int j = 0; j < BtnCenter[i].length; j++) {
+                        int dispeople = peoplerandom2 - peoplerandom1;
+                        BtnCenter[i][j].setpeople((int) (Math.random() * dispeople + peoplerandom1));
+                    }
+                }
 
-        if (chackdata == JFileChooser.APPROVE_OPTION) {
-            filepath = fileChooser.getSelectedFile().getAbsolutePath();
-            textNameFile.setText(filepath);
-            setDataButton();
-        } else {
-            textNameFile.setText("No file");
+                System.out.println(peoplerandom1);
+                System.out.println(peoplerandom2);
+            } else if (e.getSource() == BtnFile) {
+                JFileChooser fileChooser = new JFileChooser();
+                int chackdata = fileChooser.showOpenDialog(null);
+
+                if (chackdata == JFileChooser.APPROVE_OPTION) {
+                    filepath = fileChooser.getSelectedFile().getAbsolutePath();
+                    textNameFile.setText(filepath);
+                    setDataButton();
+                } else {
+                    textNameFile.setText("No file");
+                }
+            }
+        } catch (Exception eee) {
+            // TODO: handle exception
         }
+
     }
 
     public int[][] setDataButton() {
@@ -267,12 +304,11 @@ class ProcessPM implements ActionListener {
                 splitData = ReadText.split("\\s+");
                 for (int j = 0; j < splitData.length; j++) {
                     DataButton[i][j] = Integer.parseInt(splitData[j]);
-
-                    setColor();
                     System.out.print(DataButton[i][j] + "\t");
                 }
                 System.out.println();
             }
+            setColor();
 
         } catch (FileNotFoundException e) {
             // TODO: handle exception
@@ -284,34 +320,29 @@ class ProcessPM implements ActionListener {
     public void setColor() {
         for (int i = 0; i < BtnCenter.length; i++) {
             for (int j = 0; j < BtnCenter[i].length; j++) {
-                if (DataButton[i][j] <= 50) {
-                    BtnCenter[i][j].setBackground(new Color(100, 255, 100));
-                } else if (DataButton[i][j] <= 100) {
-                    BtnCenter[i][j].setBackground(new Color(255, 255, 10));
-                } else if (DataButton[i][j] <= 150) {
-                    BtnCenter[i][j].setBackground(new Color(255, 150, 10));
-                } else {
-                    BtnCenter[i][j].setBackground(new Color(255, 50, 10));
-                }
+
+                BtnCenter[i][j].setPM(DataButton[i][j]);
+                BtnCenter[i][j].setColor();
+                final int o = i;
+                final int x = j;
+
                 BtnCenter[i][j].addActionListener(new ActionListener() {
 
                     @Override
                     public void actionPerformed(ActionEvent e) {
-                        for (int k = 0; k < BtnCenter.length; k++) {
-                            for (int j2 = 0; j2 < BtnCenter[k].length; j2++) {
-                                if (e.getSource().equals(BtnCenter[k][j2])) {
-                                    if (DataButton[k][j2] <= 50) {
-                                        panelColorCenter.setBackground(new Color(100, 255, 100));
-                                    } else if (DataButton[k][j2] <= 100) {
-                                        panelColorCenter.setBackground(new Color(255, 255, 10));
-                                    } else if (DataButton[k][j2] <= 150) {
-                                        panelColorCenter.setBackground(new Color(255, 150, 10));
-                                    } else {
-                                        panelColorCenter.setBackground(new Color(255, 50, 10));
-                                    }
-                                }
-                            }
+                        int y = BtnCenter[o][x].getpeople();
+                        System.out.println(y);
+
+                        if (DataButton[o][x] <= 50) {
+                            panelColorCenter.setBackground(new Color(100, 255, 100));
+                        } else if (DataButton[o][x] <= 100) {
+                            panelColorCenter.setBackground(new Color(255, 255, 10));
+                        } else if (DataButton[o][x] <= 150) {
+                            panelColorCenter.setBackground(new Color(255, 150, 10));
+                        } else {
+                            panelColorCenter.setBackground(new Color(255, 50, 10));
                         }
+
                     }
 
                 });
