@@ -17,6 +17,8 @@ import javax.swing.JLabel;
 import javax.swing.JPanel;
 
 class ProcessPM implements ActionListener {
+    JButton BtnWt_Real;// เครื่องบิน
+    JButton BtnWt_Fake;// ฝนเทียม
     int[][] DataButton = new int[10][20]; // ข้อมูลที่อ่านมาจากไฟล์
 
     JPanel panelSouth = new JPanel();
@@ -45,11 +47,11 @@ class ProcessPM implements ActionListener {
     JLabel textColorY = new JLabel("<html>มีคนป่วย 10-19%<br>ของประชากรในพื้นที่<html>");
     JLabel textColorO = new JLabel("<html>มีคนป่วย 20-29%<br>ของประชากรในพื้นที่<html>");
     JLabel textColorR = new JLabel("<html>มีคนป่วยเกิน 30%<br>ของประชากรในพื้นที่<html>");
-    JLabel textData0 = new JLabel("Dust : 90");
-    JLabel textData1 = new JLabel("Population : 4000");
-    JLabel textData2 = new JLabel("Healthy : 1000");
-    JLabel textData3 = new JLabel("Patiant : 900");
-    JLabel textData4 = new JLabel("PercantPatient : 10%");
+    JLabel textData0 = new JLabel();
+    JLabel textData1 = new JLabel();
+    JLabel textData2 = new JLabel();
+    JLabel textData3 = new JLabel();
+    JLabel textData4 = new JLabel();
 
     public JPanel Panel_Rigth() {
 
@@ -256,26 +258,24 @@ class ProcessPM implements ActionListener {
                 String People = textInput.getText();
                 people = Integer.parseInt(People);
                 setColor();
+
                 for (int i = 0; i < BtnCenter.length; i++) {
                     for (int j = 0; j < BtnCenter[i].length; j++) {
                         BtnCenter[i][j].setpeople(people);
                     }
                 }
-                System.out.println(people);
             } else if (e.getSource() == BtnRandom) {
                 String Peopleramdom1 = textRandom1.getText();
                 String Peopleramdom2 = textRandom2.getText();
                 peoplerandom1 = Integer.parseInt(Peopleramdom1);
                 peoplerandom2 = Integer.parseInt(Peopleramdom2);
+
                 for (int i = 0; i < BtnCenter.length; i++) {
                     for (int j = 0; j < BtnCenter[i].length; j++) {
                         int dispeople = peoplerandom2 - peoplerandom1;
                         BtnCenter[i][j].setpeople((int) (Math.random() * dispeople + peoplerandom1));
                     }
                 }
-
-                System.out.println(peoplerandom1);
-                System.out.println(peoplerandom2);
             } else if (e.getSource() == BtnFile) {
                 JFileChooser fileChooser = new JFileChooser();
                 int chackdata = fileChooser.showOpenDialog(null);
@@ -331,6 +331,7 @@ class ProcessPM implements ActionListener {
                     @Override
                     public void actionPerformed(ActionEvent e) {
                         int y = BtnCenter[o][x].getpeople();
+                        showDatatext(DataButton[o][x]);
                         System.out.println(y);
 
                         if (DataButton[o][x] <= 50) {
@@ -350,9 +351,18 @@ class ProcessPM implements ActionListener {
         }
     }
 
+    void showDatatext(int DataButton) {
+        textData0.setText("Dust :" + DataButton);
+        textData1.setText("Population :");
+        textData2.setText("Healthy :");
+        textData3.setText("Patiant :");
+        textData4.setText("PercantPatient :");
+
+    }
+
     void icon_Sounth() {
         ImageIcon icon0 = new ImageIcon("Screenshot 2024-07-26 165047.png");// เครื่องบิน
-        JButton BtnWt_Real = new JButton(icon0) {
+        BtnWt_Real = new JButton(icon0) {
             protected void paintComponent(Graphics g) {
                 g.drawImage(icon0.getImage(), 0, 0, 150, 100, this);
             }
@@ -369,7 +379,7 @@ class ProcessPM implements ActionListener {
         BtnWt_Real.setFocusPainted(false);
 
         ImageIcon icon1 = new ImageIcon("Screenshot 2024-07-26 183342.png");// เมฆ
-        JButton BtnWt_Fake = new JButton(icon1);
+        BtnWt_Fake = new JButton(icon1);
         BtnWt_Fake.addActionListener(new ActionListener() {
             public void actionPerformed(ActionEvent f) {
                 System.out.println("Fake");
