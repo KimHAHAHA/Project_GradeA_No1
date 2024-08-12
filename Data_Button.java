@@ -4,6 +4,8 @@ import javax.swing.JButton;
 public class Data_Button extends JButton {
     int PM;
     int people;
+    int row;
+    int colum;
 
     void setPM(int PM) {
         this.PM = PM;
@@ -19,6 +21,22 @@ public class Data_Button extends JButton {
 
     int getpeople() {
         return people;
+    }
+
+    void setrow(int row) {
+        this.row = row;
+    }
+
+    int getrow() {
+        return row;
+    }
+
+    void setcolum(int colum) {
+        this.colum = colum;
+    }
+
+    int getcolum() {
+        return colum;
     }
 
     void setColorButton() {

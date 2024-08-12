@@ -1,7 +1,6 @@
 import java.awt.Color;
 import java.awt.Font;
 import java.awt.TextField;
-import java.awt.Graphics;
 import java.awt.event.ActionEvent;
 import java.awt.event.ActionListener;
 import java.awt.GridLayout;
@@ -17,8 +16,8 @@ import javax.swing.JLabel;
 import javax.swing.JPanel;
 
 class ProcessPM implements ActionListener {
-    JButton BtnWt_Real;// เครื่องบิน
-    JButton BtnWt_Fake;// ฝนเทียม
+    JButton BtnWt_Real = new JButton();// ฝนจริง
+    JButton BtnWt_Fake = new JButton();// ฝนเทียม
     int[][] DataButton = new int[10][20]; // ข้อมูลที่อ่านมาจากไฟล์
 
     JPanel panelSouth = new JPanel();
@@ -241,6 +240,8 @@ class ProcessPM implements ActionListener {
         BtnFile.addActionListener(this);
         BtnSetInput.addActionListener(this);
         BtnRandom.addActionListener(this);
+        BtnWt_Real.addActionListener(this);
+        BtnWt_Fake.addActionListener(this);
         icon_Sounth();
 
         return panelSouth;
@@ -251,8 +252,9 @@ class ProcessPM implements ActionListener {
     int peoplerandom1;
     int peoplerandom2;
     int people;
+    Boolean fonfake = false;
 
-    public void actionPerformed(ActionEvent e) {
+    public void actionPerformed(ActionEvent e) {/// action
         try {
             if (e.getSource() == BtnSetInput) {
                 String People = textInput.getText();
@@ -286,6 +288,22 @@ class ProcessPM implements ActionListener {
                 } else {
                     textNameFile.setText("No file");
                 }
+            } else if (e.getSource() == BtnWt_Real) {
+                for (int i = 0; i < BtnCenter.length; i++) {
+                    for (int j = 0; j < BtnCenter[i].length; j++) {
+                        int disPM = BtnCenter[i][j].getPM();
+                        disPM = disPM - 50;
+                        if (disPM < 0) {
+                            disPM = 0;
+                        }
+                        BtnCenter[i][j].setPM(disPM);
+                        BtnCenter[i][j].setColorButton();
+                        setColorpanel(disPM);
+                        showDatatext(disPM, BtnCenter[i][j].getpeople());
+                    }
+                }
+            } else if (e.getSource() == BtnWt_Fake) {
+                fonfake = true;
             }
         } catch (Exception eee) {
             // TODO: handle exception
@@ -322,6 +340,8 @@ class ProcessPM implements ActionListener {
 
                 BtnCenter[i][j].setPM(DataButton[i][j]);
                 BtnCenter[i][j].setColorButton();
+                BtnCenter[i][j].setrow(i);
+                BtnCenter[i][j].setcolum(j);
                 final int o = i;
                 final int x = j;
 
@@ -330,19 +350,31 @@ class ProcessPM implements ActionListener {
                     @Override
                     public void actionPerformed(ActionEvent e) {
                         int Npeople = BtnCenter[o][x].getpeople();
-                        showDatatext(DataButton[o][x], Npeople);
-                        System.out.println(Npeople);
+                        showDatatext(BtnCenter[o][x].getPM(), Npeople);
+                        setColorpanel(BtnCenter[o][x].getPM());
+                        if (fonfake) {
+                            try {
+                                int B = o, C = x;
+                                int[][] fon = { { B - 1, C - 1 }, { B - 1, C }, { B - 1, C + 1 }, { B, C - 1 },
+                                        { B, C + 1 }, { B + 1, C - 1 }, { B + 1, C }, { B + 1, C + 1 } };
+                                for (int k = 0, l = 0; k < fon.length; k++) {
+                                    int row = BtnCenter[fon[k][l]][fon[k][l + 1]].getrow();
+                                    int colum = BtnCenter[fon[k][l]][fon[k][l + 1]].getcolum();
+                                    setRainfake(row, colum);
+                                }
+                                float disPM = (float) BtnCenter[B][C].getPM();
+                                disPM = disPM - (disPM * ((float) 50 / 100));
+                                if (disPM < 0) {
+                                    disPM = 0;
+                                }
+                                BtnCenter[B][C].setPM((int) disPM);
+                                BtnCenter[B][C].setColorButton();
+                                fonfake = false;
+                            } catch (ArrayIndexOutOfBoundsException ee) {
+                                // TODO: handle exception
+                            }
 
-                        if (DataButton[o][x] <= 50) {
-                            panelColorCenter.setBackground(new Color(100, 255, 100));
-                        } else if (DataButton[o][x] <= 100) {
-                            panelColorCenter.setBackground(new Color(255, 255, 10));
-                        } else if (DataButton[o][x] <= 150) {
-                            panelColorCenter.setBackground(new Color(255, 150, 10));
-                        } else {
-                            panelColorCenter.setBackground(new Color(255, 50, 10));
                         }
-
                     }
 
                 });
@@ -350,27 +382,50 @@ class ProcessPM implements ActionListener {
         }
     }
 
+    void setRainfake(int row, int colum) {
+        try {
+            float disPM = (float) BtnCenter[row][colum].getPM();
+            disPM = disPM - (disPM * ((float) 30 / 100));
+            if (disPM < 0) {
+                disPM = 0;
+            }
+            BtnCenter[row][colum].setPM((int) disPM);
+            BtnCenter[row][colum].setColorButton();
+        } catch (ArrayIndexOutOfBoundsException e) {
+            // TODO: handle exception
+        }
+
+    }
+
+    void setColorpanel(int data) {
+        if (data <= 50) {
+            panelColorCenter.setBackground(new Color(100, 255, 100));
+        } else if (data <= 100) {
+            panelColorCenter.setBackground(new Color(255, 255, 10));
+        } else if (data <= 150) {
+            panelColorCenter.setBackground(new Color(255, 150, 10));
+        } else {
+            panelColorCenter.setBackground(new Color(255, 50, 10));
+        }
+    }
+
     void showDatatext(int DataButton, int pepo) {
+        int PercantPatient = DataButton / 5;
+        float Patiant = pepo * ((float) PercantPatient / 100);
+        int Healthy = pepo - (int) Patiant;
+
         textData0.setText("Dust :" + DataButton);
         textData1.setText("Population :" + pepo);
-        textData2.setText("Healthy :");
-        textData3.setText("Patiant :");
-        textData4.setText("PercantPatient :");
+        textData2.setText("Healthy :" + Healthy);
+        textData3.setText("Patiant :" + (int) Patiant);
+        textData4.setText("PercantPatient :" + PercantPatient);
 
     }
 
     void icon_Sounth() {
         ImageIcon icon0 = new ImageIcon("Screenshot 2024-07-26 165047.png");// เครื่องบิน
-        BtnWt_Real = new JButton(icon0) {
-            protected void paintComponent(Graphics g) {
-                g.drawImage(icon0.getImage(), 0, 0, 150, 100, this);
-            }
-        };
-        BtnWt_Real.addActionListener(new ActionListener() {
-            public void actionPerformed(ActionEvent e) {
-                System.out.println("Real");
-            }
-        });
+        BtnWt_Real.setIcon(icon0);
+
         BtnWt_Real.setSize(150, 100);
         BtnWt_Real.setLocation(800, 70);
         BtnWt_Real.setBorderPainted(false);// ตั้งค่าไม่ให้แสดงพื้นหลัง
@@ -378,12 +433,7 @@ class ProcessPM implements ActionListener {
         BtnWt_Real.setFocusPainted(false);
 
         ImageIcon icon1 = new ImageIcon("Screenshot 2024-07-26 183342.png");// เมฆ
-        BtnWt_Fake = new JButton(icon1);
-        BtnWt_Fake.addActionListener(new ActionListener() {
-            public void actionPerformed(ActionEvent f) {
-                System.out.println("Fake");
-            }
-        });
+        BtnWt_Fake.setIcon(icon1);
         BtnWt_Fake.setSize(160, 100);
         BtnWt_Fake.setLocation(970, 70);
         BtnWt_Fake.setBorderPainted(false);// ตั้งค่าไม่ให้แสดงพื้นหลัง
