@@ -257,7 +257,6 @@ class ProcessPM implements ActionListener {
             if (e.getSource() == BtnSetInput) {
                 String People = textInput.getText();
                 people = Integer.parseInt(People);
-                setColor();
 
                 for (int i = 0; i < BtnCenter.length; i++) {
                     for (int j = 0; j < BtnCenter[i].length; j++) {
@@ -322,7 +321,7 @@ class ProcessPM implements ActionListener {
             for (int j = 0; j < BtnCenter[i].length; j++) {
 
                 BtnCenter[i][j].setPM(DataButton[i][j]);
-                BtnCenter[i][j].setColor();
+                BtnCenter[i][j].setColorButton();
                 final int o = i;
                 final int x = j;
 
@@ -330,9 +329,9 @@ class ProcessPM implements ActionListener {
 
                     @Override
                     public void actionPerformed(ActionEvent e) {
-                        int y = BtnCenter[o][x].getpeople();
-                        showDatatext(DataButton[o][x]);
-                        System.out.println(y);
+                        int Npeople = BtnCenter[o][x].getpeople();
+                        showDatatext(DataButton[o][x], Npeople);
+                        System.out.println(Npeople);
 
                         if (DataButton[o][x] <= 50) {
                             panelColorCenter.setBackground(new Color(100, 255, 100));
@@ -351,9 +350,9 @@ class ProcessPM implements ActionListener {
         }
     }
 
-    void showDatatext(int DataButton) {
+    void showDatatext(int DataButton, int pepo) {
         textData0.setText("Dust :" + DataButton);
-        textData1.setText("Population :");
+        textData1.setText("Population :" + pepo);
         textData2.setText("Healthy :");
         textData3.setText("Patiant :");
         textData4.setText("PercantPatient :");

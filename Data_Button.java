@@ -21,7 +21,7 @@ public class Data_Button extends JButton {
         return people;
     }
 
-    void setColor() {
+    void setColorButton() {
         if (PM <= 50) {
             setBackground(new Color(100, 255, 100));
         } else if (PM <= 100) {
