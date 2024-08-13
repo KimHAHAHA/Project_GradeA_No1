@@ -17,8 +17,7 @@ import javax.swing.JPanel;
 
 public class MyStart {
     public static void main(String[] args) {
-        MyFrame myFrame = new MyFrame();
-        myFrame.setVisible(true);
+
     }
 }
 

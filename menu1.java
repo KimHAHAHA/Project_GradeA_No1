@@ -18,7 +18,7 @@ public class menu1 extends JFrame implements ActionListener{
 
     public menu1(){
         setSize(1200, 800);
-        setLocation(0,0);
+        setLocation(350, 60);
         setDefaultCloseOperation(EXIT_ON_CLOSE);
         setLayout(null);
     
@@ -99,15 +99,15 @@ public class menu1 extends JFrame implements ActionListener{
     @Override
     public void actionPerformed(ActionEvent e) {
         if (e.getSource() == SButtont) {
-            JFrame frameStart = new JFrame();
-            frameStart.setSize(1200, 800);
-            frameStart.setDefaultCloseOperation(DISPOSE_ON_CLOSE);
-            frameStart.setVisible(true);
+            MyFrame myFrame = new MyFrame();
+            myFrame.setDefaultCloseOperation(DISPOSE_ON_CLOSE);
+            myFrame.setVisible(true);
         }
         else if (e.getSource() == AButtont) {
             JFrame frameAbout = new JFrame();
             MovingImagesWithBackground Miwb = new MovingImagesWithBackground();
             frameAbout.add(Miwb);
+            frameAbout.setLocation(350, 60);
             frameAbout.setSize(1200, 800);
             frameAbout.setDefaultCloseOperation(DISPOSE_ON_CLOSE);
             frameAbout.setVisible(true);
