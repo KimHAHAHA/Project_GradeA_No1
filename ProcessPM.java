@@ -1,3 +1,4 @@
+import java.awt.BorderLayout;
 import java.awt.Color;
 import java.awt.Font;
 import java.awt.TextField;
@@ -12,47 +13,64 @@ import java.io.IOException;
 import javax.swing.ImageIcon;
 import javax.swing.JButton;
 import javax.swing.JFileChooser;
+import javax.swing.JFrame;
 import javax.swing.JLabel;
 import javax.swing.JPanel;
 
-class ProcessPM implements ActionListener {
-    JButton BtnWt_Real = new JButton();// ฝนจริง
-    JButton BtnWt_Fake = new JButton();// ฝนเทียม
+class ProcessPM extends JFrame implements ActionListener {
+    JButton BtnWt_Real = new JButton(); // ฝนจริง
+    JButton BtnWt_Fake = new JButton(); // ฝนเทียม
     int[][] DataButton = new int[10][20]; // ข้อมูลที่อ่านมาจากไฟล์
+    String filepath = "filepath"; // ตำแหน่งไฟล์
+    Boolean fonfake = false; // เช็คการกดปุ่มฝนเทียม
 
-    JPanel panelSouth = new JPanel();
-    JButton BtnFile = new JButton("SELECT");
-    JButton BtnRandom = new JButton("RANDOM");
-    JButton BtnSetInput = new JButton("CONFIRM");
+    JPanel panelCenter = new JPanel(); // สร้าง panel หลักรับทุก panel
+    JPanel panelButtonCenter = new JPanel(); // สร้าง panel ปุ่ม
+    JPanel panelRigth = new JPanel(); // สร้าง panel ด้านขวา
+    JPanel panelColorCenter = new JPanel(); // สร้าง panel สีแสดงข้อมูลใน panel ขวา
+    Data_Button[][] BtnCenter = new Data_Button[10][20]; // สร้าง con เป็น array ไว้เก็บข้อมูลในปุ่ม
 
-    TextField textInput = new TextField();
-    TextField textNameFile = new TextField();
-    TextField textRandom1 = new TextField();
-    TextField textRandom2 = new TextField();
+    JPanel panelSouth = new JPanel(); // สร้าง panel ด้านล่าง
+    JButton BtnFile = new JButton("SELECT"); // ปุ่มอ่านข้อมูลไฟล์
+    JButton BtnRandom = new JButton("RANDOM"); // ปุ่มยืนยันแบบสุ่ม
+    JButton BtnSetInput = new JButton("CONFIRM"); // ปุ่มยืนยันค่าคงที่
 
-    JLabel textF = new JLabel("INPUT FILE");
-    JLabel textS = new JLabel("INPUT PROPULATION");
-    JLabel textR = new JLabel("INPUT NUMBER RANDOM");
+    TextField textInput = new TextField(); // รับข้อมูลค่าคงที่
+    TextField textNameFile = new TextField(); // แสดงต่ำแหน่งไฟล์
+    TextField textRandom1 = new TextField(); // สุ่มตั้งแต่...
+    TextField textRandom2 = new TextField(); // สุ่มถึง...
 
-    //////////////////////////////////////// เซ็ตสีและข้อมูลที่แสดง
-    JPanel panelRigth = new JPanel();
-    // ProcessPM ProCess = new ProcessPM();
-    JPanel panelColorCenter = new JPanel();
-    JPanel panelColorG = new JPanel();
-    JPanel panelColorY = new JPanel();
-    JPanel panelColorO = new JPanel();
-    JPanel panelColorR = new JPanel();
-    JLabel textColorG = new JLabel("<html>มีคนป่วย 0-9%<br>ของประชากรในพื้นที่<html>");
-    JLabel textColorY = new JLabel("<html>มีคนป่วย 10-19%<br>ของประชากรในพื้นที่<html>");
-    JLabel textColorO = new JLabel("<html>มีคนป่วย 20-29%<br>ของประชากรในพื้นที่<html>");
-    JLabel textColorR = new JLabel("<html>มีคนป่วยเกิน 30%<br>ของประชากรในพื้นที่<html>");
-    JLabel textData0 = new JLabel();
-    JLabel textData1 = new JLabel();
-    JLabel textData2 = new JLabel();
-    JLabel textData3 = new JLabel();
-    JLabel textData4 = new JLabel();
+    JLabel textData0 = new JLabel(); // แสดงข้อมูลปริมาณฝุ่น
+    JLabel textData1 = new JLabel(); // แสดงข้อมูลปริมาณคน
+    JLabel textData2 = new JLabel(); // แสดงข้อมูลประชาการที่สุขภาพดี
+    JLabel textData3 = new JLabel(); // แสดงข้อมูลประชาการที่ป่วย
+    JLabel textData4 = new JLabel(); // แสดงข้อมูลร้อยละประชาการที่ป่วย
 
-    public JPanel Panel_Rigth() {
+    public ProcessPM() {
+        setLocation(350, 60);
+        setSize(1200, 800);
+        setDefaultCloseOperation(JFrame.EXIT_ON_CLOSE);
+        setLayout(new GridLayout());
+        setTitle("MENU");
+
+        panelCenter.setLayout(null);
+        panelCenter.setBackground(new Color(211, 211, 211));
+
+        panelCenter.add(Panel_South());
+        // panelCenter.add(PnBtnCenter());
+        panelCenter.add(Panel_Rigth());
+        add(panelCenter, BorderLayout.CENTER);
+    }
+
+    public JPanel Panel_Rigth() { // method setPanel ด้านข้าง
+        JPanel panelColorG = new JPanel();
+        JPanel panelColorY = new JPanel();
+        JPanel panelColorO = new JPanel();
+        JPanel panelColorR = new JPanel();
+        JLabel textColorG = new JLabel("<html>มีคนป่วย 0-9%<br>ของประชากรในพื้นที่<html>");
+        JLabel textColorY = new JLabel("<html>มีคนป่วย 10-19%<br>ของประชากรในพื้นที่<html>");
+        JLabel textColorO = new JLabel("<html>มีคนป่วย 20-29%<br>ของประชากรในพื้นที่<html>");
+        JLabel textColorR = new JLabel("<html>มีคนป่วยเกิน 30%<br>ของประชากรในพื้นที่<html>");
 
         panelRigth.setSize(390, 505);
         panelRigth.setLocation(810, 0);
@@ -137,7 +155,7 @@ class ProcessPM implements ActionListener {
         return panelRigth;
     }
 
-    void icon_Rigth() {
+    void icon_Rigth() { // method setemoji ในpanel ด้านข้าง
         ImageIcon emoji0 = new ImageIcon("Screenshot 2024-07-26 191313.png");
         JLabel em1 = new JLabel(emoji0);
         em1.setSize(100, 50);
@@ -145,14 +163,7 @@ class ProcessPM implements ActionListener {
         panelRigth.add(em1);
     }
 
-    ////////////////////////////////////////////////////////////
-
-    ///////////////////////////////////////////////////////////// _PanelButton
-    JPanel panelButtonCenter = new JPanel();
-    Data_Button[][] BtnCenter = new Data_Button[10][20];
-    // Data_Button[][] BtnCenter = new Data_Button[10][20];
-
-    public JPanel PnBtnCenter() {
+    public JPanel PnBtnCenter() { // method setPanel ปุ่ม10*20
 
         panelButtonCenter.setSize(800, 500);
         panelButtonCenter.setLocation(5, 5);
@@ -168,9 +179,12 @@ class ProcessPM implements ActionListener {
         return panelButtonCenter;
     }
 
-    /////////////////////////////////////////////////////////////
-    //////////////////////////////////////////////////////////// _PanelSouth
-    public JPanel Panel_South() {
+    public JPanel Panel_South() { // method setPanel ด้านล่าง
+
+        JLabel textF = new JLabel("INPUT FILE");
+        JLabel textS = new JLabel("INPUT PROPULATION");
+        JLabel textR = new JLabel("INPUT NUMBER RANDOM");
+
         panelSouth.setSize(1200, 390);
         panelSouth.setLocation(0, 510);
         panelSouth.setLayout(null);
@@ -247,19 +261,19 @@ class ProcessPM implements ActionListener {
         return panelSouth;
     }
 
-    //////////////////////////////////////////////////////////////////
-    String filepath = "youuu";
-    int peoplerandom1;
-    int peoplerandom2;
-    int people;
-    Boolean fonfake = false;
+    boolean OnButton = true;
 
-    public void actionPerformed(ActionEvent e) {/// action
+    public void actionPerformed(ActionEvent e) {
         try {
             if (e.getSource() == BtnSetInput) {
                 String People = textInput.getText();
-                people = Integer.parseInt(People);
-
+                int people = Integer.parseInt(People);
+                if (OnButton) {
+                    panelCenter.add(PnBtnCenter());
+                    panelCenter.revalidate();
+                    setDataButton();
+                    OnButton = false;
+                }
                 for (int i = 0; i < BtnCenter.length; i++) {
                     for (int j = 0; j < BtnCenter[i].length; j++) {
                         BtnCenter[i][j].setpeople(people);
@@ -268,9 +282,14 @@ class ProcessPM implements ActionListener {
             } else if (e.getSource() == BtnRandom) {
                 String Peopleramdom1 = textRandom1.getText();
                 String Peopleramdom2 = textRandom2.getText();
-                peoplerandom1 = Integer.parseInt(Peopleramdom1);
-                peoplerandom2 = Integer.parseInt(Peopleramdom2);
-
+                int peoplerandom1 = Integer.parseInt(Peopleramdom1);
+                int peoplerandom2 = Integer.parseInt(Peopleramdom2);
+                if (OnButton) {
+                    panelCenter.add(PnBtnCenter());
+                    panelCenter.revalidate();
+                    setDataButton();
+                    OnButton = false;
+                }
                 for (int i = 0; i < BtnCenter.length; i++) {
                     for (int j = 0; j < BtnCenter[i].length; j++) {
                         int dispeople = peoplerandom2 - peoplerandom1;
