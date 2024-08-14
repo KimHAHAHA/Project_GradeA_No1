@@ -272,12 +272,14 @@ class ProcessPM extends JFrame implements ActionListener {
                         panelCenter.add(PnBtnCenter());
                         panelCenter.revalidate();
                         setDataButton();
-                        textS.setText("INPUT PROPULATION");
                         OnButton = false;
                     }
                     for (int i = 0; i < BtnCenter.length; i++) {
                         for (int j = 0; j < BtnCenter[i].length; j++) {
+                            textS.setText("INPUT PROPULATION");
                             BtnCenter[i][j].setpeople(people);
+                            setColor();
+                            showDatatext(0, BtnCenter[i][j].getpeople());
                         }
                     }
                 } else {
@@ -294,12 +296,14 @@ class ProcessPM extends JFrame implements ActionListener {
                         panelCenter.revalidate();
                         setDataButton();
                         OnButton = false;
-                        textR.setText("INPUT NUMBER RANDOM");
                     }
                     for (int i = 0; i < BtnCenter.length; i++) {
                         for (int j = 0; j < BtnCenter[i].length; j++) {
+                            textR.setText("INPUT NUMBER RANDOM");
                             int dispeople = peoplerandom2 - peoplerandom1;
                             BtnCenter[i][j].setpeople((int) (Math.random() * dispeople + peoplerandom1));
+                            setColor();
+                            showDatatext(0, BtnCenter[i][j].getpeople());
                         }
                     }
                 } else {
@@ -334,7 +338,26 @@ class ProcessPM extends JFrame implements ActionListener {
                 fonfake = true;
             }
         } catch (Exception eee) {
+            if (e.getSource() == BtnSetInput) {
+                textS.setText("TRY AGAIN!!");
+                for (int i = 0; i < BtnCenter.length; i++) {
+                    for (int j = 0; j < BtnCenter[i].length; j++) {
 
+                        BtnCenter[i][j].setpeople(0);
+                        showDatatext(0, BtnCenter[i][j].getpeople());
+                    }
+                }
+            } else if (e.getSource() == BtnRandom) {
+                textR.setText("TRY AGAIN!!");
+                for (int i = 0; i < BtnCenter.length; i++) {
+                    for (int j = 0; j < BtnCenter[i].length; j++) {
+
+                        BtnCenter[i][j].setpeople(0);
+                        showDatatext(0, BtnCenter[i][j].getpeople());
+                    }
+                }
+
+            }
         }
 
     }
