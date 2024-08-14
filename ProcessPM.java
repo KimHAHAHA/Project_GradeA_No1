@@ -184,13 +184,6 @@ class ProcessPM extends JFrame implements ActionListener {
     JLabel textR = new JLabel("INPUT NUMBER RANDOM");
 
     public JPanel Panel_South() { // method setPanel ด้านล่าง
-
-        /*
-         * JLabel textF = new JLabel("INPUT FILE");
-         * JLabel textS = new JLabel("INPUT PROPULATION");
-         * JLabel textR = new JLabel("INPUT NUMBER RANDOM");
-         */
-
         panelSouth.setSize(1200, 390);
         panelSouth.setLocation(0, 510);
         panelSouth.setLayout(null);
@@ -274,23 +267,28 @@ class ProcessPM extends JFrame implements ActionListener {
             if (e.getSource() == BtnSetInput) {
                 String People = textInput.getText();
                 int people = Integer.parseInt(People);
-                if (OnButton) {
-                    panelCenter.add(PnBtnCenter());
-                    panelCenter.revalidate();
-                    setDataButton();
-                    OnButton = false;
-                }
-                for (int i = 0; i < BtnCenter.length; i++) {
-                    for (int j = 0; j < BtnCenter[i].length; j++) {
-                        BtnCenter[i][j].setpeople(people);
+                if (people >= 1) {
+                    if (OnButton) {
+                        panelCenter.add(PnBtnCenter());
+                        panelCenter.revalidate();
+                        setDataButton();
+                        textS.setText("INPUT PROPULATION");
+                        OnButton = false;
                     }
+                    for (int i = 0; i < BtnCenter.length; i++) {
+                        for (int j = 0; j < BtnCenter[i].length; j++) {
+                            BtnCenter[i][j].setpeople(people);
+                        }
+                    }
+                } else {
+                    textS.setText("TRY AGAIN!!");
                 }
             } else if (e.getSource() == BtnRandom) {
                 String Peopleramdom1 = textRandom1.getText();
                 String Peopleramdom2 = textRandom2.getText();
                 int peoplerandom1 = Integer.parseInt(Peopleramdom1);
                 int peoplerandom2 = Integer.parseInt(Peopleramdom2);
-                if (peoplerandom1 <= peoplerandom2) {
+                if (peoplerandom1 <= peoplerandom2 && peoplerandom1 >= 1) {
                     if (OnButton) {
                         panelCenter.add(PnBtnCenter());
                         panelCenter.revalidate();
