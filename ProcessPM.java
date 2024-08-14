@@ -179,11 +179,17 @@ class ProcessPM extends JFrame implements ActionListener {
         return panelButtonCenter;
     }
 
+    JLabel textF = new JLabel("INPUT FILE");
+    JLabel textS = new JLabel("INPUT PROPULATION");
+    JLabel textR = new JLabel("INPUT NUMBER RANDOM");
+
     public JPanel Panel_South() { // method setPanel ด้านล่าง
 
-        JLabel textF = new JLabel("INPUT FILE");
-        JLabel textS = new JLabel("INPUT PROPULATION");
-        JLabel textR = new JLabel("INPUT NUMBER RANDOM");
+        /*
+         * JLabel textF = new JLabel("INPUT FILE");
+         * JLabel textS = new JLabel("INPUT PROPULATION");
+         * JLabel textR = new JLabel("INPUT NUMBER RANDOM");
+         */
 
         panelSouth.setSize(1200, 390);
         panelSouth.setLocation(0, 510);
@@ -284,17 +290,22 @@ class ProcessPM extends JFrame implements ActionListener {
                 String Peopleramdom2 = textRandom2.getText();
                 int peoplerandom1 = Integer.parseInt(Peopleramdom1);
                 int peoplerandom2 = Integer.parseInt(Peopleramdom2);
-                if (OnButton) {
-                    panelCenter.add(PnBtnCenter());
-                    panelCenter.revalidate();
-                    setDataButton();
-                    OnButton = false;
-                }
-                for (int i = 0; i < BtnCenter.length; i++) {
-                    for (int j = 0; j < BtnCenter[i].length; j++) {
-                        int dispeople = peoplerandom2 - peoplerandom1;
-                        BtnCenter[i][j].setpeople((int) (Math.random() * dispeople + peoplerandom1));
+                if (peoplerandom1 <= peoplerandom2) {
+                    if (OnButton) {
+                        panelCenter.add(PnBtnCenter());
+                        panelCenter.revalidate();
+                        setDataButton();
+                        OnButton = false;
+                        textR.setText("INPUT NUMBER RANDOM");
                     }
+                    for (int i = 0; i < BtnCenter.length; i++) {
+                        for (int j = 0; j < BtnCenter[i].length; j++) {
+                            int dispeople = peoplerandom2 - peoplerandom1;
+                            BtnCenter[i][j].setpeople((int) (Math.random() * dispeople + peoplerandom1));
+                        }
+                    }
+                } else {
+                    textR.setText("TRY AGAIN!!");
                 }
             } else if (e.getSource() == BtnFile) {
                 JFileChooser fileChooser = new JFileChooser();
@@ -325,7 +336,7 @@ class ProcessPM extends JFrame implements ActionListener {
                 fonfake = true;
             }
         } catch (Exception eee) {
-            // TODO: handle exception
+
         }
 
     }
