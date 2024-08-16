@@ -264,7 +264,7 @@ class ProcessPM extends JFrame implements ActionListener {
             if (e.getSource() == BtnSetInput) {
                 String People = textInput.getText();
                 int people = Integer.parseInt(People);
-                if (people >= 1) {
+                if (people >= 0) {
                     if (OnButton) {
                         panelCenter.add(PnBtnCenter());
                         panelCenter.revalidate();
