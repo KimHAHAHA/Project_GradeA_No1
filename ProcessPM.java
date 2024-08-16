@@ -40,16 +40,15 @@ class ProcessPM extends JFrame implements ActionListener {
     TextField textRandom1 = new TextField(); // สุ่มตั้งแต่...
     TextField textRandom2 = new TextField(); // สุ่มถึง...
 
-    JLabel textData0 = new JLabel(); // แสดงข้อมูลปริมาณฝุ่น
-    JLabel textData1 = new JLabel(); // แสดงข้อมูลปริมาณคน
-    JLabel textData2 = new JLabel(); // แสดงข้อมูลประชาการที่สุขภาพดี
-    JLabel textData3 = new JLabel(); // แสดงข้อมูลประชาการที่ป่วย
-    JLabel textData4 = new JLabel(); // แสดงข้อมูลร้อยละประชาการที่ป่วย
+    JLabel textDataPM = new JLabel(); // แสดงข้อมูลปริมาณฝุ่น
+    JLabel textDataPeople = new JLabel(); // แสดงข้อมูลปริมาณคน
+    JLabel textDataHealthy = new JLabel(); // แสดงข้อมูลประชาการที่สุขภาพดี
+    JLabel textDataPatiant = new JLabel(); // แสดงข้อมูลประชาการที่ป่วย
+    JLabel textDataPercantPatient = new JLabel(); // แสดงข้อมูลร้อยละประชาการที่ป่วย
 
     public ProcessPM() {
         setLocation(350, 60);
         setSize(1200, 800);
-        setDefaultCloseOperation(JFrame.EXIT_ON_CLOSE);
         setLayout(new GridLayout());
         setTitle("MENU");
 
@@ -57,7 +56,6 @@ class ProcessPM extends JFrame implements ActionListener {
         panelCenter.setBackground(new Color(211, 211, 211));
 
         panelCenter.add(Panel_South());
-        // panelCenter.add(PnBtnCenter());
         panelCenter.add(Panel_Rigth());
         add(panelCenter, BorderLayout.CENTER);
     }
@@ -114,31 +112,31 @@ class ProcessPM extends JFrame implements ActionListener {
         textColorR.setLocation(105, 430);
         textColorR.setFont(new Font("Tahoma", Font.BOLD, 14));
 
-        textData0.setSize(300, 50);
-        textData0.setFont(new Font("Tahoma", Font.BOLD, 16));
-        textData0.setLocation(5, 40);
+        textDataPM.setSize(300, 50);
+        textDataPM.setFont(new Font("Tahoma", Font.BOLD, 16));
+        textDataPM.setLocation(5, 40);
 
-        textData1.setSize(300, 50);
-        textData1.setFont(new Font("Tahoma", Font.BOLD, 16));
-        textData1.setLocation(5, 70);
+        textDataPeople.setSize(300, 50);
+        textDataPeople.setFont(new Font("Tahoma", Font.BOLD, 16));
+        textDataPeople.setLocation(5, 70);
 
-        textData2.setSize(300, 50);
-        textData2.setFont(new Font("Tahoma", Font.BOLD, 16));
-        textData2.setLocation(5, 100);
+        textDataHealthy.setSize(300, 50);
+        textDataHealthy.setFont(new Font("Tahoma", Font.BOLD, 16));
+        textDataHealthy.setLocation(5, 100);
 
-        textData3.setSize(300, 50);
-        textData3.setFont(new Font("Tahoma", Font.BOLD, 16));
-        textData3.setLocation(5, 130);
+        textDataPatiant.setSize(300, 50);
+        textDataPatiant.setFont(new Font("Tahoma", Font.BOLD, 16));
+        textDataPatiant.setLocation(5, 130);
 
-        textData4.setSize(300, 50);
-        textData4.setFont(new Font("Tahoma", Font.BOLD, 16));
-        textData4.setLocation(5, 160);
+        textDataPercantPatient.setSize(300, 50);
+        textDataPercantPatient.setFont(new Font("Tahoma", Font.BOLD, 16));
+        textDataPercantPatient.setLocation(5, 160);
 
-        panelColorCenter.add(textData0);
-        panelColorCenter.add(textData1);
-        panelColorCenter.add(textData2);
-        panelColorCenter.add(textData3);
-        panelColorCenter.add(textData4);
+        panelColorCenter.add(textDataPM);
+        panelColorCenter.add(textDataPeople);
+        panelColorCenter.add(textDataHealthy);
+        panelColorCenter.add(textDataPatiant);
+        panelColorCenter.add(textDataPercantPatient);
 
         panelRigth.add(panelColorCenter);
         panelRigth.add(panelColorG);
@@ -155,8 +153,8 @@ class ProcessPM extends JFrame implements ActionListener {
         return panelRigth;
     }
 
-    void icon_Rigth() { // method setemoji ในpanel ด้านข้าง
-        ImageIcon emoji0 = new ImageIcon("Screenshot 2024-07-26 191313.png");
+    void icon_Rigth() {
+        ImageIcon emoji0 = new ImageIcon("V_emoji.png");
         JLabel em1 = new JLabel(emoji0);
         em1.setSize(100, 50);
         em1.setLocation(270, 460);
@@ -164,7 +162,6 @@ class ProcessPM extends JFrame implements ActionListener {
     }
 
     public JPanel PnBtnCenter() { // method setPanel ปุ่ม10*20
-
         panelButtonCenter.setSize(800, 500);
         panelButtonCenter.setLocation(5, 5);
         panelButtonCenter.setLayout(new GridLayout(10, 20));
@@ -278,7 +275,7 @@ class ProcessPM extends JFrame implements ActionListener {
                         for (int j = 0; j < BtnCenter[i].length; j++) {
                             textS.setText("INPUT PROPULATION");
                             BtnCenter[i][j].setpeople(people);
-                            setColor();
+                            panelColorCenter.setBackground(new Color(211, 211, 211));
                             showDatatext(0, BtnCenter[i][j].getpeople());
                         }
                     }
@@ -290,7 +287,7 @@ class ProcessPM extends JFrame implements ActionListener {
                 String Peopleramdom2 = textRandom2.getText();
                 int peoplerandom1 = Integer.parseInt(Peopleramdom1);
                 int peoplerandom2 = Integer.parseInt(Peopleramdom2);
-                if (peoplerandom1 <= peoplerandom2 && peoplerandom1 >= 1) {
+                if (peoplerandom1 <= peoplerandom2 && peoplerandom1 >= 0) {
                     if (OnButton) {
                         panelCenter.add(PnBtnCenter());
                         panelCenter.revalidate();
@@ -300,9 +297,9 @@ class ProcessPM extends JFrame implements ActionListener {
                     for (int i = 0; i < BtnCenter.length; i++) {
                         for (int j = 0; j < BtnCenter[i].length; j++) {
                             textR.setText("INPUT NUMBER RANDOM");
-                            int dispeople = peoplerandom2 - peoplerandom1;
+                            int dispeople = (peoplerandom2 - peoplerandom1) + 1;
                             BtnCenter[i][j].setpeople((int) (Math.random() * dispeople + peoplerandom1));
-                            setColor();
+                            panelColorCenter.setBackground(new Color(211, 211, 211));
                             showDatatext(0, BtnCenter[i][j].getpeople());
                         }
                     }
@@ -340,41 +337,24 @@ class ProcessPM extends JFrame implements ActionListener {
         } catch (Exception eee) {
             if (e.getSource() == BtnSetInput) {
                 textS.setText("TRY AGAIN!!");
-                for (int i = 0; i < BtnCenter.length; i++) {
-                    for (int j = 0; j < BtnCenter[i].length; j++) {
-
-                        BtnCenter[i][j].setpeople(0);
-                        showDatatext(0, BtnCenter[i][j].getpeople());
-                    }
-                }
             } else if (e.getSource() == BtnRandom) {
                 textR.setText("TRY AGAIN!!");
-                for (int i = 0; i < BtnCenter.length; i++) {
-                    for (int j = 0; j < BtnCenter[i].length; j++) {
-
-                        BtnCenter[i][j].setpeople(0);
-                        showDatatext(0, BtnCenter[i][j].getpeople());
-                    }
-                }
-
             }
         }
-
     }
 
-    public int[][] setDataButton() {
+    public void setDataButton() {
         String[] splitData;
 
         try (BufferedReader Read = new BufferedReader(new FileReader(filepath))) {
-
             String ReadText;
             for (int i = 0; (ReadText = Read.readLine()) != null; i++) {
                 splitData = ReadText.split("\\s+");
                 for (int j = 0; j < splitData.length; j++) {
                     DataButton[i][j] = Integer.parseInt(splitData[j]);
-                    System.out.print(DataButton[i][j] + "\t");
+                    // System.out.print(DataButton[i][j] + "\t");
                 }
-                System.out.println();
+                // System.out.println();
             }
             setColor();
 
@@ -382,13 +362,11 @@ class ProcessPM extends JFrame implements ActionListener {
             // TODO: handle exception
         } catch (IOException ee) {
         }
-        return DataButton;
     }
 
     public void setColor() {
         for (int i = 0; i < BtnCenter.length; i++) {
             for (int j = 0; j < BtnCenter[i].length; j++) {
-
                 BtnCenter[i][j].setPM(DataButton[i][j]);
                 BtnCenter[i][j].setColorButton();
                 BtnCenter[i][j].setrow(i);
@@ -397,7 +375,6 @@ class ProcessPM extends JFrame implements ActionListener {
                 final int x = j;
 
                 BtnCenter[i][j].addActionListener(new ActionListener() {
-
                     @Override
                     public void actionPerformed(ActionEvent e) {
                         int Npeople = BtnCenter[o][x].getpeople();
@@ -424,10 +401,8 @@ class ProcessPM extends JFrame implements ActionListener {
                             } catch (ArrayIndexOutOfBoundsException ee) {
                                 // TODO: handle exception
                             }
-
                         }
                     }
-
                 });
             }
         }
@@ -465,16 +440,16 @@ class ProcessPM extends JFrame implements ActionListener {
         float Patiant = pepo * ((float) PercantPatient / 100);
         int Healthy = pepo - (int) Patiant;
 
-        textData0.setText("Dust :" + DataButton);
-        textData1.setText("Population :" + pepo);
-        textData2.setText("Healthy :" + Healthy);
-        textData3.setText("Patiant :" + (int) Patiant);
-        textData4.setText("PercantPatient :" + PercantPatient);
+        textDataPM.setText("Dust :" + DataButton);
+        textDataPeople.setText("Population :" + pepo);
+        textDataHealthy.setText("Healthy :" + Healthy);
+        textDataPatiant.setText("Patiant :" + (int) Patiant);
+        textDataPercantPatient.setText("PercantPatient :" + PercantPatient);
 
     }
 
     void icon_Sounth() {
-        ImageIcon icon0 = new ImageIcon("Screenshot 2024-07-26 165047.png");// เครื่องบิน
+        ImageIcon icon0 = new ImageIcon("V_cloud.png");
         BtnWt_Real.setIcon(icon0);
 
         BtnWt_Real.setSize(150, 100);
@@ -483,7 +458,7 @@ class ProcessPM extends JFrame implements ActionListener {
         BtnWt_Real.setContentAreaFilled(false);
         BtnWt_Real.setFocusPainted(false);
 
-        ImageIcon icon1 = new ImageIcon("Screenshot 2024-07-26 183342.png");// เมฆ
+        ImageIcon icon1 = new ImageIcon("V_airplane.png");
         BtnWt_Fake.setIcon(icon1);
         BtnWt_Fake.setSize(160, 100);
         BtnWt_Fake.setLocation(970, 70);
@@ -491,7 +466,7 @@ class ProcessPM extends JFrame implements ActionListener {
         BtnWt_Fake.setContentAreaFilled(false);
         BtnWt_Fake.setFocusPainted(false);
 
-        ImageIcon emoji0 = new ImageIcon("Screenshot 2024-07-26 191313.png");// อิโมจิ
+        ImageIcon emoji0 = new ImageIcon("V_emoji.png");// อิโมจิ
         JLabel em = new JLabel(emoji0);
         em.setSize(100, 50);
         em.setLocation(0, 205);

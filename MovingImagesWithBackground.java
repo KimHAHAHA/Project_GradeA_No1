@@ -3,8 +3,6 @@ import java.awt.Image;
 import java.awt.Toolkit;
 import java.awt.event.ActionEvent;
 import java.awt.event.ActionListener;
-import javax.swing.JButton;
-import javax.swing.JFrame;
 import javax.swing.JPanel;
 import javax.swing.Timer;
 
@@ -17,7 +15,7 @@ public class MovingImagesWithBackground extends JPanel implements ActionListener
     Timer timer;
     int FRAME_WIDTH = 1200;
     int FRAME_HEIGHT = 800;
-    int IMAGE_SIZE = 50; // ขนาดของรูปภาพ (ปรับตามขนาดจริง)
+    int IMAGE_SIZE = 300; // ขนาดของรูปภาพ (ปรับตามขนาดจริง)
     String backgroundImagePath = "PM_2.5.png"; // เส้นทางรูปภาพพื้นหลัง
     String[] imagePaths = {
         "Theerapat.png",
@@ -53,32 +51,15 @@ public class MovingImagesWithBackground extends JPanel implements ActionListener
             y[i] += yDirection[i];
             
             // เปลี่ยนทิศทางเมื่อชนขอบของกรอบ 1200x800
-            if (x[i] < 0 || x[i] > 1000 - IMAGE_SIZE) {
+            if (x[i] < 0 || x[i] > 1200 - IMAGE_SIZE) {
                 xDirection[i] *= -1;
             }
-            if (y[i] < 0 || y[i] > 500 - IMAGE_SIZE) {
+            if (y[i] < 0 || y[i] > 800 - IMAGE_SIZE) {
                 yDirection[i] *= -1;
             }
         }
+        // เรียกใช้ paintComponent เพื่อวาดภาพใหม่
         repaint();
     }  
 }
 
-class BackMenu extends JFrame{
-
-    public BackMenu() {
-        MovingImagesWithBackground miwb = new MovingImagesWithBackground();
-        JButton BackButton = new JButton();
-        BackButton.setSize(50, 50);
-        add(miwb);
-        BackButton.addActionListener(new ActionListener() {
-            @Override
-            public void actionPerformed(ActionEvent e) {
-                setSize(1200, 800);
-                setVisible(true);
-            }
-            
-        });
-    }
-    
-}
